@@ -1,4 +1,4 @@
-{config, ...}: 
+{config, pkgs, ...}:
 {
   imports = [ ../9net.nix ];
 
@@ -55,4 +55,17 @@
 
   # Set your time zone.
   time.timeZone = "Europe/London";
+
+  systemd.services.shutdown-monitor = {
+    wantedBy = [ "multi-user.target" ];
+    description = "tell That Monitor to go away";
+    serviceConfig = {
+        Type = "oneshot";
+        ExecStop = "${pkgs.ddcutil}/bin/ddcutil -d 2 setvcp d6 5";
+        RemainAfterExit = "true";
+      };
+  };
+
+  hardware.openrazer.enable = true;
+  environment.systemPackages = [ pkgs.razergenie ];
 }

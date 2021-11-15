@@ -8,8 +8,12 @@ let unstable = import <nixos-unstable> {
 }; in
 {
   boot.kernelParams = [ "vfio-pci.ids=10de:0fc1,10de:0e1b" ];
-  boot.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+  boot.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
   boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
+  boot.zfs.forceImportAll = true;
+
+  # for ddcutil
+  hardware.i2c.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -66,7 +70,7 @@ let unstable = import <nixos-unstable> {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.stary = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "libvirtd" "i2c" "plugdev" ]; # Enable ‘sudo’ for the user.
   };
 
   # List packages installed in system profile. To search, run:
@@ -111,6 +115,10 @@ let unstable = import <nixos-unstable> {
      # https://github.com/NixOS/nixpkgs/issues/2448
      dconf
      kicad-unstable
+
+     rustup
+     ddcutil
+     cron
   ];
 
   # List services that you want to enable:
@@ -176,5 +184,8 @@ let unstable = import <nixos-unstable> {
         fi
     '';
   };
+
+  services.cron.enable = true;
+  services.cron.systemCronJobs = [ "@weekly stary ${pkgs.python3}/bin/python /home/stary/bin/do_rofi_stuff.py /home/stary/.cache/rofi3.druncache" ];
 }
 

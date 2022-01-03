@@ -25,7 +25,16 @@ let unstable = import <nixos-unstable> {
     virt-manager = unstable.virt-manager;
     qemu = unstable.qemu;
     sublime4 = unstable.sublime4;
-    kicad-unstable = unstable.kicad-unstable;
+    kicad = unstable.kicad;
+  })
+
+  (self: super: {
+    pinned-geant4 = ( super.callPackage ./pkgs/geant4/default.nix { qtbase = super.qtbase; wrapQtAppsHook = super.wrapQtAppsHook; } );
+    pinned-root =  ( super.callPackage ./pkgs/root/default.nix { Cocoa = null; CoreSymbolication = null; OpenGL = null; } );
+  })
+
+  ( self: super: {
+    flashplayer = ( super.callPackage ./pkgs/flashplayer.nix {} );
   })
   ];
 
@@ -55,7 +64,7 @@ let unstable = import <nixos-unstable> {
      killall
      file
      cron
-     rxvt_unicode.terminfo
+     rxvt-unicode.terminfo
   ];
 
   # Enable the OpenSSH daemon.

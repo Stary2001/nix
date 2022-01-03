@@ -17,6 +17,12 @@
   boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
   boot.zfs.forceImportAll = true;
 
+  boot.postBootCommands = ''
+    echo "Loading ZFS keys from root (hopefully)"
+    ${pkgs.zfs}/bin/zfs load-key -a
+  '';
+
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "zfs" ];
@@ -27,7 +33,7 @@
   services.xserver.windowManager.i3.enable = true;
   services.xserver.layout = "gb";
 
-  users.users.stary.extraGroups = [ "libvirtd" "i2c" "plugdev" ];
+  users.users.stary.extraGroups = [ "libvirtd" "i2c" "plugdev" "openrazer" ];
   
   # Enable sound.
   security.rtkit.enable = true;
@@ -101,7 +107,7 @@
   };
 
   hardware.openrazer.enable = true;
-  environment.systemPackages = [ pkgs.razergenie ];
+  environment.systemPackages = [ pkgs.razergenie pkgs.hledger pkgs.hledger-web ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -123,4 +129,5 @@
   };
 
   services.cron.systemCronJobs = [ "@weekly stary ${pkgs.python3}/bin/python /home/stary/bin/do_rofi_stuff.py /home/stary/.cache/rofi3.druncache" ];
+  services.lorri.enable = true;
 }

@@ -39,10 +39,11 @@
 
      # https://github.com/NixOS/nixpkgs/issues/2448
      dconf
-     kicad-unstable
+     kicad
 
      rustup
      ddcutil
      cron
+     direnv
   ];
 }

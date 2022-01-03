@@ -22,7 +22,6 @@
     ${pkgs.zfs}/bin/zfs load-key -a
   '';
 
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "zfs" ];
@@ -34,6 +33,13 @@
   services.xserver.layout = "gb";
 
   users.users.stary.extraGroups = [ "libvirtd" "i2c" "plugdev" "openrazer" ];
+
+  environment.systemPackages = with pkgs; [
+      razergenie
+      hledger
+      hledger-web
+      aarch64-none-gcc
+  ];
   
   # Enable sound.
   security.rtkit.enable = true;
@@ -107,7 +113,6 @@
   };
 
   hardware.openrazer.enable = true;
-  environment.systemPackages = [ pkgs.razergenie pkgs.hledger pkgs.hledger-web ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

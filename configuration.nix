@@ -36,6 +36,10 @@ let unstable = import <nixos-unstable> {
   ( self: super: {
     flashplayer = ( super.callPackage ./pkgs/flashplayer.nix {} );
   })
+
+  ( self: super: {
+    aarch64-none-gcc = ( super.callPackage ./pkgs/aarch64-none-gcc.nix {} );
+  })
   ];
 
   # Select internationalisation properties.
@@ -64,7 +68,7 @@ let unstable = import <nixos-unstable> {
      killall
      file
      cron
-     rxvt-unicode.terminfo
+     rxvt_unicode.terminfo
   ];
 
   # Enable the OpenSSH daemon.

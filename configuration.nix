@@ -40,6 +40,13 @@ let unstable = import <nixos-unstable> {
   ( self: super: {
     aarch64-none-gcc = ( super.callPackage ./pkgs/aarch64-none-gcc.nix {} );
   })
+
+  (self: super: {
+    todoist-electron = super.todoist-electron.override {
+      electron = super.electron_15;
+    };
+  })
+
   ];
 
   # Select internationalisation properties.

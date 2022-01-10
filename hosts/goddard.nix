@@ -47,4 +47,30 @@
 
   # Set your time zone.
   time.timeZone = "Europe/London";
+
+  services.rtorrent.enable = true;
+  options.my.wireguard = {
+    enable = true;
+    address = { IPv4 = "10.65.198.147/32", IPv6 = "fc00:bbbb:bbbb:bb01::2:c692/128" };
+    peer = mkOption {};
+    endpoint = "185.195.232.66:51820";
+    privateKey = "/etc/wireguard/mullvad.key";
+  };
+
+  [Interface]
+PrivateKey = SCVgLks5Y2X7Ew+5UWo+vRb2/MNc47F/cURtaPBC5Es=
+DNS = 193.138.218.74
+
+[Peer]
+PublicKey = VZwE8hrpNzg6SMwn9LtEqonXzSWd5dkFk62PrNWFW3Y=
+AllowedIPs = 0.0.0.0/0,::0/0
+Endpoint = 185.195.232.66:51820
+
+  };
+
+  systemd.services.rtorrent = {
+    bindsTo = [ "wg.service" ];
+    after = [ "wg.service" ];
+    serviceConfig.NetworkNamespacePath = "/var/run/netns/wg";
+  };
 }

@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../9net.nix ../netns.nix ../netns-wg.nix ../netns-veth.nix ];
+  imports = [ ../9net.nix ../netns.nix ../netns-wg.nix ../netns-veth.nix ../rutorrent-overlay.nix ];
 
   services.tinc.networks."9net"= {
     name = "stary_goddard";
@@ -49,6 +49,12 @@
   time.timeZone = "Europe/London";
 
   services.rtorrent.enable = true;
+  services.rutorrent = {
+    enable = true;
+    hostName = "goddard.9net.org";
+    plugins = [ "httprpc" "data" "diskspace" "edit" "erasedata" "theme" "trafic" ];
+  };
+
   my.wireguard = {
     enable = true;
     address = { IPv4 = "10.65.198.147/32"; IPv6 = "fc00:bbbb:bbbb:bb01::2:c692/128"; };

@@ -135,4 +135,18 @@
 
   services.cron.systemCronJobs = [ "@weekly stary ${pkgs.python3}/bin/python /home/stary/bin/do_rofi_stuff.py /home/stary/.cache/rofi3.druncache" ];
   services.lorri.enable = true;
+
+  services.dnsmasq.enable = true;
+  services.dnsmasq.resolveLocalQueries = false;
+  services.dnsmasq.extraConfig = ''
+port=0 # disable DNS server
+interface=br0
+bind-interfaces
+dhcp-range=192.168.0.0,proxy
+log-dhcp
+
+enable-tftp
+tftp-root=/var/lib/tftp
+pxe-service=0,"Raspberry Pi Boot"
+  '';
 }

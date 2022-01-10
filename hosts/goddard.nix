@@ -48,11 +48,15 @@
   # Set your time zone.
   time.timeZone = "Europe/London";
 
+  services.nginx.enable = true;
+
   services.rtorrent.enable = true;
   services.rutorrent = {
     enable = true;
     hostName = "goddard.9net.org";
     plugins = [ "httprpc" "data" "diskspace" "edit" "erasedata" "theme" "trafic" ];
+
+    nginx.enable = true;
   };
 
   my.wireguard = {

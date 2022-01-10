@@ -251,7 +251,7 @@ in {
                 "listen.owner" = config.services.nginx.user;
                 "listen.group" = config.services.nginx.group;
               } // cfg.poolSettings;
-              phpEnv.PATH = lib.makeBinPath (getPluginDependencies phpPluginDependencies cfg.plugins);
+              # phpEnv.PATH = lib.makeBinPath (getPluginDependencies phpPluginDependencies cfg.plugins);
             };
           };
 

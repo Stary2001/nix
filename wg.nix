@@ -12,6 +12,7 @@ in {
     privateKey = mkOption {
       type = types.path;
     };
+    dns = mkOption {};
   };
 
   config.systemd.services.wg = {
@@ -35,10 +36,18 @@ in {
         ${pkgs.iproute}/bin/ip -n wg route add default dev wg
         ${pkgs.iproute}/bin/ip -n wg -6 route add default dev wg
       '';
+
       ExecStop =  pkgs.writers.writeDash "wg-down" ''
         ${pkgs.iproute}/bin/ip -n wg link del wg
         ${pkgs.iproute}/bin/ip -n wg route del default dev wg
       '';
+    };
+  };
+
+  environment.etc.netns.wg = {
+    "resolv.conf" = {
+      text = "nameserver ${cfg.dns}";
+      mode = 0664;
     };
   };
 }

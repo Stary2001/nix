@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../9net.nix ../netns.nix ../netns-wg.nix ];
+  imports = [ ../9net.nix ../netns.nix ../netns-wg.nix ../netns-veth.nix ];
 
   services.tinc.networks."9net"= {
     name = "stary_goddard";

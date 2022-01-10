@@ -50,7 +50,11 @@
 
   services.nginx.enable = true;
 
-  services.rtorrent.enable = true;
+  services.rtorrent = {
+    enable = true;
+    port = 56059; # mullvad port forwarding
+  };
+
   services.rutorrent = {
     enable = true;
     hostName = "goddard.9net.org";

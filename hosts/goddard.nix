@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../9net.nix ../netns.nix ../netns-wg.nix ../netns-veth.nix ../rutorrent-overlay.nix ];
+  imports = [ ../9net.nix ../netns.nix ../netns-wg.nix ../rutorrent-overlay.nix ];
 
   services.tinc.networks."9net"= {
     name = "stary_goddard";
@@ -52,7 +52,7 @@
 
   services.rtorrent = {
     enable = true;
-    port = 56059; # mullvad port forwarding
+    port = 56059; # port obtained via mullvad port forwarding
   };
 
   services.rutorrent = {
@@ -63,6 +63,20 @@
     nginx.enable = true;
   };
 
+  # Enable + require SSL
+  services.nginx.virtualHosts."goddard.9net.org" = {
+    enableACME = true;
+    forceSSL = true;
+  };
+
+  security.acme = {
+    acceptTerms = true;
+    certs = {
+      "goddard.9net.org".email = "zek@9net.org";
+    };
+  };
+
+  # Set up wireguard, confine rtorrent to wireguard
   my.wireguard = {
     enable = true;
     address = { IPv4 = "10.65.198.147/32"; IPv6 = "fc00:bbbb:bbbb:bb01::2:c692/128"; };

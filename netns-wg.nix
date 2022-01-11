@@ -48,4 +48,20 @@ in {
     text = "nameserver ${cfg.dns}";
     mode = "0664";
   };
+
+  # this is required when using resolved
+  config.environment.etc."netns/wg/nsswitch.conf" = { 
+    text = ''passwd:    files systemd
+group:     files systemd
+shadow:    files
+
+hosts:     mymachines files myhostname dns
+networks:  files
+
+ethers:    files
+services:  files
+protocols: files
+rpc:       files'';
+    mode = "0644";
+  };
 }

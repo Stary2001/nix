@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../unstable-overlays.nix ../9net.nix ../qemu-hook.nix ../desktop-ish.nix ];
+  imports = [ ../unstable-overlays.nix ../9net.nix ../netns.nix ../netns-wg.nix ../qemu-hook.nix ../desktop-ish.nix ];
 
   services.tinc.networks."9net"= {
     name = "stary_glados";
@@ -149,4 +149,14 @@ enable-tftp
 tftp-root=/var/lib/tftp
 pxe-service=0,"Raspberry Pi Boot"
   '';
+
+  # Set up wireguard.
+  my.wireguard = {
+    enable = true;
+    address = { IPv4 = "10.66.81.209/32"; IPv6 = "fc00:bbbb:bbbb:bb01::3:51d0/128"; };
+    peer = "+iQWuT3wb2DCy1u2eUKovhJTCB4aUdJUnpxGtONDIVE=";
+    endpoint = "185.248.85.18:51820";
+    privateKey = "/etc/wireguard/mullvad.key";
+    dns = "193.138.218.74";
+  };
 }

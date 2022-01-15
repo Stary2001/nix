@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../9net.nix ../qemu-hook.nix ../desktop-ish.nix ];
+  imports = [ ../unstable-overlays.nix ../9net.nix ../qemu-hook.nix ../desktop-ish.nix ];
 
   services.tinc.networks."9net"= {
     name = "stary_glados";

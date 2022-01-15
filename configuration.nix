@@ -2,51 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-let unstable = import <nixos-unstable> {
-  config = config.nixpkgs.config;
-}; in
-{
+{ config, pkgs, ... }: {
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.config.permittedInsecurePackages = [
          "electron-11.5.0"
-  ];
-
-  nixpkgs.overlays = [ (self: super: {
-    polybar = super.polybar.override {
-      pulseSupport = true;
-      i3Support = true;
-    };
-  })
-
-  (self: super: {
-    libvirt = unstable.libvirt;
-    virt-manager = unstable.virt-manager;
-    qemu = unstable.qemu;
-    sublime4 = unstable.sublime4;
-    kicad = unstable.kicad;
-  })
-
-  (self: super: {
-    pinned-geant4 = ( super.callPackage ./pkgs/geant4/default.nix { qtbase = super.qtbase; wrapQtAppsHook = super.wrapQtAppsHook; } );
-    pinned-root =  ( super.callPackage ./pkgs/root/default.nix { Cocoa = null; CoreSymbolication = null; OpenGL = null; } );
-  })
-
-  ( self: super: {
-    flashplayer = ( super.callPackage ./pkgs/flashplayer.nix {} );
-  })
-
-  ( self: super: {
-    aarch64-none-gcc = ( super.callPackage ./pkgs/aarch64-none-gcc.nix {} );
-  })
-
-  (self: super: {
-    todoist-electron = super.todoist-electron.override {
-      electron = super.electron_15;
-    };
-  })
-
   ];
 
   # Select internationalisation properties.

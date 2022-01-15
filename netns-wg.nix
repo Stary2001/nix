@@ -44,10 +44,8 @@ in {
     };
   };
 
-  config.environment.etc.netns.wg = {
-    "resolv.conf" = {
-      text = "nameserver ${cfg.dns}";
-      mode = 0664;
-    };
+  config.environment.etc."netns/wg/resolv.conf" = {
+    text = "nameserver ${cfg.dns}";
+    mode = "0664";
   };
 }

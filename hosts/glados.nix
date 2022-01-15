@@ -39,6 +39,7 @@
       hledger
       hledger-web
       aarch64-none-gcc
+      tio
   ];
   
   # Enable sound.

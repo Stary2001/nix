@@ -36,6 +36,7 @@
      file
      cron
      rxvt_unicode.terminfo
+     htop
   ];
 
   # Enable the OpenSSH daemon.

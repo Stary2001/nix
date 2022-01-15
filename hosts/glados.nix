@@ -32,7 +32,7 @@
   services.xserver.windowManager.i3.enable = true;
   services.xserver.layout = "gb";
 
-  users.users.stary.extraGroups = [ "libvirtd" "i2c" "plugdev" "openrazer" ];
+  users.users.stary.extraGroups = [ "libvirtd" "i2c" "plugdev" "dialout" "openrazer" ];
 
   environment.systemPackages = with pkgs; [
       razergenie

@@ -160,4 +160,6 @@ pxe-service=0,"Raspberry Pi Boot"
     privateKey = "/etc/wireguard/mullvad.key";
     dns = "193.138.218.74";
   };
+
+  networking.firewall.enable = false;
 }

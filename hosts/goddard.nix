@@ -97,4 +97,6 @@
     after = [ "wg.service" ];
     serviceConfig.NetworkNamespacePath = "/var/run/netns/wg";
   };
+
+  services.firewall.enable = false;
 }

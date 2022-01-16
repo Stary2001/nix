@@ -59,6 +59,8 @@
     useDHT = true;
     usePEX = true;
     useUDPTrackers = true;
+
+    openFirewall = true;
   };
 
   services.rutorrent = {
@@ -98,5 +100,15 @@
     serviceConfig.NetworkNamespacePath = "/var/run/netns/wg";
   };
 
-  services.firewall.enable = false;
+  networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [
+    22 # ssh
+    80 # http
+    443 # https
+    5355 # llmnr
+  ];
+
+  # none (tm)
+  networking.firewall.allowedUDPPorts = [
+  ];
 }

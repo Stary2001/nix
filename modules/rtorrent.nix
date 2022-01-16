@@ -141,7 +141,7 @@ in {
       };
     };
 
-    networking.firewall.allowedTCPPorts = mkIf (cfg.openFirewall) [ cfg.port ];
+    networking.firewall.allowedTCPPorts = mkIf (cfg.openFirewall) [ cfg.port cfg.dhtPort ];
 
     services.rtorrent.configText = mkBefore ''
       # Instance layout (base paths)

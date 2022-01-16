@@ -53,6 +53,7 @@
   services.rtorrent = {
     enable = true;
     port = 56059; # port obtained via mullvad port forwarding
+    dhtPort = 56431; # port obtained via mullvad port forwarding
 
     # yolo it
     useDHT = true;

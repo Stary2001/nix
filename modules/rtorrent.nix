@@ -100,6 +100,14 @@ in {
       '';
     };
 
+    dhtPort = mkOption {
+      type = types.port;
+      default = 50001;
+      description = ''
+        UDP port to use for DHT.
+      '';
+    };
+
     usePEX = mkOption {
       type = types.bool;
       default = false;
@@ -153,6 +161,7 @@ in {
       # Tracker-less torrent and UDP tracker support
       # (conservative settings for 'private' trackers, change for 'public')
       dht.mode.set = ${if cfg.useDHT then "on" else "disable"}
+      dht.port.set = ${toString cfg.dhtPort}
       protocol.pex.set = ${if cfg.usePEX then "yes" else "no"}
       trackers.use_udp.set = ${if cfg.useUDPTrackers then "yes" else "no"}
 

@@ -161,5 +161,7 @@ pxe-service=0,"Raspberry Pi Boot"
     dns = "193.138.218.74";
   };
 
+  programs.kdeconnect.enable = true;
+
   networking.firewall.enable = false;
 }

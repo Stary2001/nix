@@ -91,6 +91,30 @@ in {
         The content of <filename>rtorrent.rc</filename>. The <link xlink:href="https://rtorrent-docs.readthedocs.io/en/latest/cookbook.html#modernized-configuration-template">modernized configuration template</link> with the values specified in this module will be prepended using mkBefore. You can use mkForce to overwrite the config completly.
       '';
     };
+
+    useDHT = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Whether to enable using DHT.
+      '';
+    };
+
+    usePEX = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Whether to enable using Peer Exchange.
+      '';
+    };
+
+    useUDPTrackers = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Whether to enable using UDP trackers.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
@@ -128,9 +152,9 @@ in {
 
       # Tracker-less torrent and UDP tracker support
       # (conservative settings for 'private' trackers, change for 'public')
-      dht.mode.set = disable
-      protocol.pex.set = no
-      trackers.use_udp.set = no
+      dht.mode.set = ${if cfg.useDHT then "on" else "disable"}
+      protocol.pex.set = ${if cfg.usePEX then "yes" else "no"}
+      trackers.use_udp.set = ${if cfg.useUDPTrackers then "yes" else "no"}
 
       # Peer settings
       throttle.max_uploads.set = 100

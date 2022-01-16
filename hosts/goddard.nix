@@ -53,6 +53,11 @@
   services.rtorrent = {
     enable = true;
     port = 56059; # port obtained via mullvad port forwarding
+
+    # yolo it
+    useDHT = true;
+    usePEX = true;
+    useUDPTrackers = true;
   };
 
   services.rutorrent = {

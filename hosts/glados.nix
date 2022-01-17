@@ -40,6 +40,7 @@
       hledger-web
       aarch64-none-gcc
       tio
+      wine
   ];
   
   # Enable sound.

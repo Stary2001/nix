@@ -134,6 +134,9 @@
     enable = true;
     onBoot = "ignore";
     onShutdown = "shutdown";
+
+    qemu.ovmf.package = pkgs.OVMF.override { secureBoot = true; tpmSupport = true; };
+    qemu.swtpm.enable = true;
   };
 
   services.cron.systemCronJobs = [ "@weekly stary ${pkgs.python3}/bin/python /home/stary/bin/do_rofi_stuff.py /home/stary/.cache/rofi3.druncache" ];

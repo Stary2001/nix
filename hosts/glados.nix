@@ -41,6 +41,7 @@
       aarch64-none-gcc
       tio
       wine
+      zoom-us
   ];
   
   # Enable sound.

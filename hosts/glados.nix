@@ -32,7 +32,7 @@
   services.xserver.windowManager.i3.enable = true;
   services.xserver.layout = "gb";
 
-  users.users.stary.extraGroups = [ "libvirtd" "i2c" "plugdev" "dialout" "openrazer" ];
+  users.users.stary.extraGroups = [ "libvirtd" "i2c" "plugdev" "dialout" "openrazer" "adbusers" ];
 
   environment.systemPackages = with pkgs; [
       razergenie
@@ -165,4 +165,6 @@ pxe-service=0,"Raspberry Pi Boot"
   programs.kdeconnect.enable = true;
 
   networking.firewall.enable = false;
+
+  programs.adb.enable = true;
 }

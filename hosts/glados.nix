@@ -171,4 +171,31 @@ pxe-service=0,"Raspberry Pi Boot"
   networking.firewall.enable = false;
 
   programs.adb.enable = true;
+
+  nixpkgs.overlays = [ (self: super: {
+    #chromium = super.chromium.overrideAttrs (_ :{
+    #  upstream-info.version = "97.0.4692.92";
+    #  upstream-info.sha256 = "no";
+    #});
+
+    google-chrome = super.google-chrome.overrideAttrs (_: rec {
+      suffix = "-stable";
+      name = "google-chrome${suffix}-${version}";
+      version = "96.0.4664.110";
+
+      pkgSuffix = "stable";
+      pkgName = "google-chrome-${pkgSuffix}";
+
+      src = pkgs.fetchurl {
+        urls = map (repo: "${repo}/${pkgName}/${pkgName}_${version}-1_amd64.deb") [
+          "https://dl.google.com/linux/chrome/deb/pool/main/g"
+          "http://95.31.35.30/chrome/pool/main/g"
+          "http://mirror.pcbeta.com/google/chrome/deb/pool/main/g"
+          "http://repo.fdzh.org/chrome/deb/pool/main/g"
+        ];
+        sha256 = "17cyj1jx47fz6y26f196xhlngrw5gnjgcvapvgkgswlwd7y67jcb";
+      };
+    });
+
+  }) ];
 }

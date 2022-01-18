@@ -41,7 +41,16 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-
   services.cron.enable = true;
+
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCr6tEiHEdt6B1BGmzTbE/huBVUMspm85J85Id1+k5mBfmuxvRfgAqgr/ywgFRTClSRt2x4PwgiRMIsAuHNc9WwkeMVVDHHaY+s1Nvy4QbCCZCyPE3+mNj/H2ImS3WvUDZ+yS5l4Td7Z4+KuadUD7IGMBGCsnTBZJZUutZTY9vZnurqQICi+rmRBLTB+qHXUeP1fMACySaF5bYxg+y7cWBnNMuKXh7UzZM+GJaqJSA+YXYb1ErDiwCa3ytUZH5F8Q6GQXag6+HA2y/7rwtvgS/rTF6coAAle2NUc4KL4ZT2ZqD4iM/eeQVz1AK51fqlz5kG318+5t7GDaUAIDQmvwOfoQCXHxZqWGSHPjpJp6p17syhR4/IItbaLk83togtQfSKMjVSPZnDVyc+NTv71pFG4HTiFY/gs9GY1DU8H5W3aDet8xX8UujbmSVllgDGX8H0RU63rZbxC/dsXSu5BBfzDsjsBbwJu6XMq5+WITT0sGADzbd7I0kRnf17yGQzWys= stary@wheatley"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJjUz1FruDlg5VNmvd4wi7DiXbMJcN4ujr8KtQ6OhlSc stary@pc"
+  ];
+
+  users.users.stary.openssh.authorizedKeys.keys = [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCr6tEiHEdt6B1BGmzTbE/huBVUMspm85J85Id1+k5mBfmuxvRfgAqgr/ywgFRTClSRt2x4PwgiRMIsAuHNc9WwkeMVVDHHaY+s1Nvy4QbCCZCyPE3+mNj/H2ImS3WvUDZ+yS5l4Td7Z4+KuadUD7IGMBGCsnTBZJZUutZTY9vZnurqQICi+rmRBLTB+qHXUeP1fMACySaF5bYxg+y7cWBnNMuKXh7UzZM+GJaqJSA+YXYb1ErDiwCa3ytUZH5F8Q6GQXag6+HA2y/7rwtvgS/rTF6coAAle2NUc4KL4ZT2ZqD4iM/eeQVz1AK51fqlz5kG318+5t7GDaUAIDQmvwOfoQCXHxZqWGSHPjpJp6p17syhR4/IItbaLk83togtQfSKMjVSPZnDVyc+NTv71pFG4HTiFY/gs9GY1DU8H5W3aDet8xX8UujbmSVllgDGX8H0RU63rZbxC/dsXSu5BBfzDsjsBbwJu6XMq5+WITT0sGADzbd7I0kRnf17yGQzWys= stary@wheatley"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJjUz1FruDlg5VNmvd4wi7DiXbMJcN4ujr8KtQ6OhlSc stary@pc"
+  ];
 }
 

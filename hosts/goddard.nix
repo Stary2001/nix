@@ -67,7 +67,9 @@
     enable = true;
     hostName = "goddard.9net.org";
     port = 3000;
-    package = pkgs.flood;
+    auth = "none";
+
+    nginx.enable = true;
   };
 
   #services.rutorrent = {

@@ -50,6 +50,12 @@ in {
         description = "Storage path of flood.";
       };
 
+      auth = mkOption {
+        type = types.str;
+        default = "default";
+        description = "Type of authentication to use.";
+      };
+
       rpcSocket = mkOption {
         type = types.str;
         default = config.services.rtorrent.rpcSocket;
@@ -87,7 +93,7 @@ in {
             Type = "simple";
             Restart = "on-failure";
             WorkingDirectory = cfg.dataDir;
-            ExecStart="${cfg.package}/bin/flood";
+            ExecStart="${cfg.package}/bin/flood --auth=${cfg.auth} --rtsocket=${cfg.rpcSocket}";
             RuntimeDirectory = "flood";
             RuntimeDirectoryMode = 755;
           };
@@ -101,9 +107,12 @@ in {
         "${cfg.user}" = {
           home = cfg.dataDir;
           group = cfg.group;
-          extraGroups = [ config.services.flood.group ];
+          extraGroups = [ config.services.rtorrent.group ];
           description = "Flood Daemon user";
           isSystemUser = true;
+        };
+        "${config.services.rtorrent.user}" = {
+          extraGroups = [ cfg.group ];
         };
       };
     }
@@ -117,7 +126,7 @@ in {
                 locations = {
                   "/" = {
                     extraConfig = ''
-                      proxy_pass 'http://localhost:${cfg.port}';
+                      proxy_pass 'http://localhost:${toString cfg.port}';
                     '';
                   };
                 };

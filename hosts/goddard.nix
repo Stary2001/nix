@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../9net.nix ../netns.nix ../netns-wg.nix ../rutorrent-overlay.nix ];
+  imports = [ ../9net.nix ../netns.nix ../netns-wg.nix ../rutorrent-overlay.nix ../flood-overlay.nix ../modules/flood.nix ../secrets/oauth2_proxy.nix ];
 
   services.tinc.networks."9net"= {
     name = "stary_goddard";
@@ -63,13 +63,20 @@
     openFirewall = true;
   };
 
-  services.rutorrent = {
+  services.flood = {
     enable = true;
     hostName = "goddard.9net.org";
-    plugins = [ "httprpc" "data" "diskspace" "edit" "erasedata" "theme" "trafic" ];
-
-    nginx.enable = true;
+    port = 3000;
+    package = pkgs.flood;
   };
+
+  #services.rutorrent = {
+  #  enable = true;
+  #  hostName = "goddard.9net.org";
+  #  plugins = [ "httprpc" "data" "diskspace" "edit" "erasedata" "theme" "trafic" ];
+
+  #  nginx.enable = true;
+  #};
 
   # Enable + require SSL
   services.nginx.virtualHosts."goddard.9net.org" = {
@@ -81,6 +88,21 @@
     acceptTerms = true;
     certs = {
       "goddard.9net.org".email = "zek@9net.org";
+    };
+  };
+
+  users.users.oauth2_proxy.group = "oauth2_proxy";
+  users.groups.oauth2_proxy = {};
+
+  services.oauth2_proxy = {
+    # clientID/clientSecret
+    enable = true;
+    provider = "google";
+    nginx = {
+      virtualHosts = [ "goddard.9net.org" ];
+    };
+    email = {
+      addresses = "mctinfoilball@gmail.com";
     };
   };
 

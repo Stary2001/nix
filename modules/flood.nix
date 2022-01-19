@@ -16,12 +16,12 @@ in {
 
       port = mkOption {
         type = types.port;
-        description = "Port to bind Flood to."
+        description = "Port to bind Flood to.";
       };
 
       package = mkOption {
         type = types.package;
-        default = pkgs.rtorrent;
+        default = pkgs.flood;
         defaultText = literalExpression "pkgs.flood";
         description = ''
           The Flood package to use.
@@ -87,11 +87,10 @@ in {
             Type = "simple";
             Restart = "on-failure";
             WorkingDirectory = cfg.dataDir;
-            ExecStart="${cfg.package}/";
-            RuntimeDirectory = "rtorrent";
+            ExecStart="${cfg.package}/bin/flood";
+            RuntimeDirectory = "flood";
             RuntimeDirectoryMode = 755;
           };
-        };
         };
         tmpfiles.rules = [ "d '${cfg.dataDir}' 0775 ${cfg.user} ${cfg.group} -" ];
       };
@@ -102,23 +101,19 @@ in {
         "${cfg.user}" = {
           home = cfg.dataDir;
           group = cfg.group;
-          extraGroups = [ config.services.rtorrent.group ];
+          extraGroups = [ config.services.flood.group ];
           description = "Flood Daemon user";
           isSystemUser = true;
-        };
-
-        "${config.services.rtorrent.user}" = {
-          extraGroups = [ cfg.group ];
         };
       };
     }
 
-    (mkIf cfg.nginx.enable ({ services = {
+    (mkIf cfg.nginx.enable {
+      services = {
           nginx = {
             enable = true;
             virtualHosts = {
               ${cfg.hostName} = {
-                root = cfg.dataDir;
                 locations = {
                   "/" = {
                     extraConfig = ''
@@ -130,7 +125,6 @@ in {
             };
           };
         };
-      }
-    )
-  ]);
+      })
+    ]);
 }

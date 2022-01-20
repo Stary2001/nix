@@ -59,8 +59,13 @@
         interfaces = [ "enp6s0" ];
       };
     };
+
     interfaces = {
       br0 = {
+        useDHCP = true;
+      };
+      
+      wlp5s0 = {
         useDHCP = true;
       };
     };

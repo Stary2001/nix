@@ -85,7 +85,7 @@ in {
         services.flood = {
           description = "Flood system service";
           after = [ "network.target" ];
-          path = [ cfg.package ];
+          path = [ "${pkgs.mediainfo}" ];
           wantedBy = [ "multi-user.target" ];
           serviceConfig = {
             User = cfg.user;

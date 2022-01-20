@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../unstable-overlays.nix ../9net.nix ../netns.nix ../netns-wg.nix ../qemu-hook.nix ../desktop-ish.nix ../netns-wrapper.nix ];
+  imports = [ ../unstable-overlays.nix ../9net.nix ../netns.nix ../netns-wg.nix ../qemu-hook.nix ../desktop-ish.nix ../netns-wrapper.nix ../secrets/wifi.nix ];
 
   services.tinc.networks."9net"= {
     name = "stary_glados";
@@ -59,6 +59,8 @@
     hostId = "765a774a";
   
     useNetworkd = true;
+    wireless.enable = true;
+
     bridges = {
       br0 = {
         interfaces = [ "enp6s0" ];

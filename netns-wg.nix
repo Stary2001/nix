@@ -37,7 +37,7 @@ in {
         ${pkgs.iproute}/bin/ip -n wg -6 route add default dev wg
       '';
 
-      ExecStop =  pkgs.writers.writeDash "wg-down" ''
+      ExecStop = pkgs.writers.writeDash "wg-down" ''
         ${pkgs.iproute}/bin/ip -n wg link del wg
         ${pkgs.iproute}/bin/ip -n wg route del default dev wg
       '';

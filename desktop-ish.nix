@@ -45,5 +45,6 @@
      ddcutil
      cron
      direnv
+     vlc
   ];
 }

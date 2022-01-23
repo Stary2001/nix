@@ -136,7 +136,7 @@
   services.cron.systemCronJobs = [ "@weekly stary ${pkgs.python3}/bin/python /home/stary/bin/do_rofi_stuff.py /home/stary/.cache/rofi3.druncache" ];
   services.lorri.enable = true;
 
-  services.dnsmasq.enable = true;
+  services.dnsmasq.enable = false;
   services.dnsmasq.resolveLocalQueries = false;
   services.dnsmasq.extraConfig = ''
 port=0 # disable DNS server

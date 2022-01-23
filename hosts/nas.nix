@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../9net.nix ];
+  imports = [ ../secrets/wifi.nix ../9net.nix ];
 
   nine_net = {
     enable = true;
@@ -12,15 +12,24 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "zfs" ];
 
+  boot.extraModulePackages = [
+    # crap usb wifi
+    config.boot.kernelPackages.rtl88x2bu
+  ];
+
   networking = {
     useDHCP = false;
+    wireless.enable = true;
 
     hostName = "nas"; # Define your hostname.
     hostId = "3302c071";
   
     useNetworkd = true;
     interfaces = {
-      "enp4s0" = {
+      #"enp4s0" = {
+      #  useDHCP = true;
+      #};
+      "wlp0s20u2" = {
         useDHCP = true;
       };
     };

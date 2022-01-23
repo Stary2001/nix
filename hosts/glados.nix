@@ -2,15 +2,8 @@
 {
   imports = [ ../unstable-overlays.nix ../9net.nix ../netns.nix ../netns-wg.nix ../qemu-hook.nix ../desktop-ish.nix ../netns-wrapper.nix ../secrets/wifi.nix ];
 
-  services.tinc.networks."9net"= {
-    name = "stary_glados";
-    debugLevel = 3;
-    chroot = false;
-    interfaceType = "tap";
-    settings = {
-      mode = "Switch";
-    };
-  };
+  nine_net.node_name = "stary_glados";
+  nine_net.ipv4_address = "172.31.1.5";
 
   boot.kernelParams = [ "vfio-pci.ids=10de:0fc1,10de:0e1b" ];
   boot.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
@@ -65,19 +58,10 @@
       br0 = {
         interfaces = [ "enp6s0" ];
       };
-      "9net-bridge" = {
-        interfaces = [];
-      };
     };
     interfaces = {
       br0 = {
         useDHCP = true;
-      };
-
-      "9net-bridge" = {
-        ipv4 = {
-          addresses = [ { address = "172.31.1.5"; prefixLength = 16; } ];
-        };
       };
     };
 
@@ -89,12 +73,6 @@
       UseDNS = false;
     };
   };
-
-  # https://github.com/NixOS/nixpkgs/issues/30904
-  systemd.services.systemd-networkd-wait-online.serviceConfig.ExecStart = [
-    "" # clear old command
-    "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --ignore 9net-bridge"
-  ];
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config

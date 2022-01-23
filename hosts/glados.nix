@@ -2,8 +2,11 @@
 {
   imports = [ ../unstable-overlays.nix ../9net.nix ../netns.nix ../netns-wg.nix ../qemu-hook.nix ../desktop-ish.nix ../netns-wrapper.nix ../secrets/wifi.nix ];
 
-  nine_net.node_name = "stary_glados";
-  nine_net.ipv4_address = "172.31.1.5";
+  nine_net = {
+    enable = true;
+    node_name = "stary_glados";
+    ipv4_address = "172.31.1.5";
+  };
 
   boot.kernelParams = [ "vfio-pci.ids=10de:0fc1,10de:0e1b" ];
   boot.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];

@@ -41,6 +41,11 @@ with lib;
       "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --any --ignore 9net-bridge"
     ];
 
+    systemd.services."tinc.9net".unitConfig = {
+      Wants = ["network-online.target"];
+      After = ["network-online.target"];
+    };
+
     environment.systemPackages = [ pkgs.tinc_pre pkgs.bridge-utils ];
     
     environment.etc = {

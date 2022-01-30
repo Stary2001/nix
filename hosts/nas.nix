@@ -5,7 +5,7 @@
   nine_net = {
     enable = true;
     node_name = "stary_nas";
-    ipv4_address = "172.31.1.6";
+    ipv4_address = "172.31.1.7";
   };
 
   boot.loader.systemd-boot.enable = true;

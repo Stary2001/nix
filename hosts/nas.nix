@@ -2,6 +2,8 @@
 {
   imports = [ ../secrets/wifi.nix ../9net.nix ];
 
+  fileSystems."/".options = [ "defaults" "size=2G" "mode=755" ];
+
   nine_net = {
     enable = true;
     node_name = "stary_nas";
@@ -26,9 +28,10 @@
   
     useNetworkd = true;
     interfaces = {
-      #"enp4s0" = {
-      #  useDHCP = true;
-      #};
+      "enp4s0" = {
+        useDHCP = true;
+      };
+
       "wlp0s20u2" = {
         useDHCP = true;
       };
@@ -48,6 +51,7 @@
     5355 # llmnr
 
     8081
+    8384 # syncthing
   ];
 
   # none (tm)
@@ -76,5 +80,16 @@
       title = Router
       host = 192.168.0.1
     '';
+  };
+
+  services.syncthing = {
+    enable = true;
+    overrideDevices = false;
+    overrideFolders = false;
+
+    guiAddress = "0.0.0.0:8384";
+    dataDir = "/data/syncthing";
+
+    openDefaultPorts = true;
   };
 }

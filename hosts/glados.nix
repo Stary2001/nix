@@ -8,7 +8,7 @@
     ipv4_address = "172.31.1.5";
   };
 
-  boot.kernelParams = [ "vfio-pci.ids=10de:0fc1,10de:0e1b" ];
+  boot.kernelParams = [ "vfio-pci.ids=10de:0fc1,10de:0e1b" "acpi_enforce_resources=lax"];
   boot.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
   boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
   boot.zfs.forceImportAll = true;
@@ -136,7 +136,7 @@
   services.cron.systemCronJobs = [ "@weekly stary ${pkgs.python3}/bin/python /home/stary/bin/do_rofi_stuff.py /home/stary/.cache/rofi3.druncache" ];
   services.lorri.enable = true;
 
-  services.dnsmasq.enable = false;
+  services.dnsmasq.enable = true;
   services.dnsmasq.resolveLocalQueries = false;
   services.dnsmasq.extraConfig = ''
 port=0 # disable DNS server
@@ -192,4 +192,20 @@ pxe-service=0,"Raspberry Pi Boot"
     });
 
   }) ];
+
+  services.vnstat.enable = true;
+
+  #users.users.ash = {
+  #  isNormalUser = true;
+  #};
+  #users.users.ash.openssh.authorizedKeys.keys = [
+  #  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTAWuxMynX4it9pzoX6GrBcyy2fj04EfO5lD88JCK05 ash@the"
+  #];
+
+
+  fileSystems."/data/syncthing" = {
+    device = "192.168.0.70:/syncthing";
+    fsType = "nfs";
+    options = [ "x-systemd.automount" "x-systemd.idle-timeout=3600" "noauto" ];
+  };
 }

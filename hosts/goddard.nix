@@ -36,17 +36,23 @@
   #  # Do nothing, hopefully
   #};
 
-  services.nginx.enable = true;
-  # Enable + require SSL, and proxy
-  services.nginx.virtualHosts."goddard.9net.org" = {
-    enableACME = true;
-    forceSSL = true;
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    virtualHosts = {
+      "goddard.9net.org" = { enableACME = true; forceSSL = true; };
+      "flood.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "172.31.1.7:3000"; };
+      "syncthing.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "172.31.1.7:8384"; };
+    };
   };
 
   security.acme = {
     acceptTerms = true;
+    email = "zek@9net.org";
     certs = {
-      "goddard.9net.org".email = "zek@9net.org";
+      "goddard.9net.org" = {};
+      "flood.home.9net.org" = {};
+      "syncthing.home.9net.org" = {};
     };
   };
 

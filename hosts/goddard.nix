@@ -40,9 +40,10 @@
     enable = true;
     recommendedProxySettings = true;
     virtualHosts = {
-      "goddard.9net.org" = { enableACME = true; forceSSL = true; };
-      "flood.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "http://172.31.1.7:3000"; };
+      "goddard.9net.org" =        { enableACME = true; forceSSL = true; };
+      "flood.home.9net.org" =     { enableACME = true; forceSSL = true; locations."/".proxyPass = "http://172.31.1.7:3000"; };
       "syncthing.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "http://172.31.1.7:8384"; };
+      "smokeping.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "http://172.13.1.7:8081"; };
     };
   };
 
@@ -50,9 +51,6 @@
     acceptTerms = true;
     email = "zek@9net.org";
     certs = {
-      "goddard.9net.org" = {};
-      "flood.home.9net.org" = {};
-      "syncthing.home.9net.org" = {};
     };
   };
 

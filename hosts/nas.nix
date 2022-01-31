@@ -50,8 +50,9 @@
     443 # https
     5355 # llmnr
 
-    8081 # smokeping
+    3000 # flood
     8384 # syncthing
+    8081 # smokeping
 
     111 2049 4000 4001 4002 20048 # nfsv3
   ];
@@ -110,6 +111,9 @@
   networking.nat.enable = true;
   networking.nat.internalInterfaces = ["ve-+"];
   networking.nat.externalInterface = "enp4s0";
+  networking.nat.forwardPorts = [
+   { sourcePort = "3000"; proto = tcp; destination = "172.30.0.2:3000"; }
+  ];
 
   systemd.network.networks."40-veth" = {
     name = "ve-*";

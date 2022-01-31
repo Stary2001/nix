@@ -14,8 +14,15 @@ in {
         description = "FQDN for the Flood instance.";
       };
 
+      listen = mkOption {
+        type = types.str;
+        default = "127.0.0.1";
+        description = "Host to bind Flood to.";
+      };
+
       port = mkOption {
         type = types.port;
+        default = 3000;
         description = "Port to bind Flood to.";
       };
 
@@ -93,7 +100,7 @@ in {
             Type = "simple";
             Restart = "on-failure";
             WorkingDirectory = cfg.dataDir;
-            ExecStart="${cfg.package}/bin/flood --auth=${cfg.auth} --rtsocket=${cfg.rpcSocket}";
+            ExecStart="${cfg.package}/bin/flood --host=${cfg.listen} --port=${toString cfg.port} --auth=${cfg.auth} --rtsocket=${cfg.rpcSocket}";
             RuntimeDirectory = "flood";
             RuntimeDirectoryMode = 755;
           };

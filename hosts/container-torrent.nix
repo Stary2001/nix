@@ -1,6 +1,8 @@
-{config, pkgs, ...}:
+{config, pkgs, lib, ...}:
 {
   imports = [ ../rutorrent-overlay.nix ../flood-overlay.nix ../modules/flood.nix ];
+
+  environment.systemPackages = [ pkgs.rxvt_unicode.terminfo ];
 
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 3000 ];
@@ -48,5 +50,16 @@
   systemd.services.rtorrent = {
     bindsTo = [ "wireguard-wg0.service" ];
     after = [ "wireguard-wg0.service" ];
+  };
+
+  systemd.services.resolvconf.enable = lib.mkForce false;
+  systemd.services.hack-container-dns = {
+    wantedBy = [ "network-online.target" ];
+    description = "hack around container dns being bad";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 1 && echo \"nameserver 193.138.218.74\" > /etc/resolv.conf'";
+      RemainAfterExit = "true";
+    };
   };
 }

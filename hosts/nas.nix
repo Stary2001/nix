@@ -133,6 +133,11 @@
         isReadOnly = false;
       };
 
+      "/data/rtorrent" = {
+        hostPath = "/data/rtorrent";
+        isReadOnly = false;
+      };
+
      "/var/lib/flood" = {
         hostPath = "/var/lib/flood";
         isReadOnly = false;

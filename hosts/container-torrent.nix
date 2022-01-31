@@ -31,6 +31,7 @@
     useUDPTrackers = true;
 
     openFirewall = true;
+    dataDir = "/data/rtorrent";
   };
 
   services.flood = {

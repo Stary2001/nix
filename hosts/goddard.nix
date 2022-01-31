@@ -27,51 +27,18 @@
   # Set your time zone.
   time.timeZone = "Europe/London";
 
-  networking.nat.enable = true;
-  networking.nat.internalInterfaces = ["ve-+"];
-  networking.nat.externalInterface = "ens3";
+  #networking.nat.enable = true;
+  #networking.nat.internalInterfaces = ["ve-+"];
+  #networking.nat.externalInterface = "ens3";
 
-  systemd.network.networks."40-veth" = {
-    name = "ve-*";
-    # Do nothing, hopefully
-  };
-
-  containers.torrent = {
-    autoStart = true;
-
-    privateNetwork = true;
-    hostAddress = "172.30.0.1";
-    localAddress = "172.30.0.2";
-
-    bindMounts = {
-      "/var/lib/rtorrent" = {
-        hostPath = "/var/lib/rtorrent";
-        isReadOnly = false;
-      };
-
-     "/var/lib/flood" = {
-        hostPath = "/var/lib/flood";
-        isReadOnly = false;
-      };
-
-      "/etc/wireguard/mullvad.key" = {
-        hostPath = "/etc/wireguard/mullvad.key";
-        isReadOnly = true;
-      };
-    };
-
-    config = {
-      imports = [ container-torrent.nix ];
-    };
-  };
+  #systemd.network.networks."40-veth" = {
+  #  name = "ve-*";
+  #  # Do nothing, hopefully
+  #};
 
   services.nginx.enable = true;
   # Enable + require SSL, and proxy
   services.nginx.virtualHosts."goddard.9net.org" = {
-    locations."/".extraConfig =
-    ''
-      proxy_pass 'http://${config.containers.torrent.localAddress}:${toString config.containers.torrent.config.services.flood.port}';
-    '';
     enableACME = true;
     forceSSL = true;
   };

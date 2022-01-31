@@ -41,8 +41,8 @@
     recommendedProxySettings = true;
     virtualHosts = {
       "goddard.9net.org" = { enableACME = true; forceSSL = true; };
-      "flood.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "172.31.1.7:3000"; };
-      "syncthing.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "172.31.1.7:8384"; };
+      "flood.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "http://172.31.1.7:3000"; };
+      "syncthing.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "http://172.31.1.7:8384"; };
     };
   };
 

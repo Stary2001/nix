@@ -144,4 +144,6 @@
       imports = [ ./container-torrent.nix ];
     };
   };
+
+  services.vnstat.enable = true;
 }

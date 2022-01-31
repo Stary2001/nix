@@ -50,12 +50,15 @@
     443 # https
     5355 # llmnr
 
-    8081
+    8081 # smokeping
     8384 # syncthing
+
+    111 2049 4000 4001 4002 20048 # nfsv3
   ];
 
   # none (tm)
   networking.firewall.allowedUDPPorts = [
+    111 2049 4000 4001 4002 20048 # nfsv3
   ];
 
   services.smokeping = {
@@ -91,5 +94,16 @@
     dataDir = "/data/syncthing";
 
     openDefaultPorts = true;
+  };
+
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /export 192.168.0.65(rw,fsid=0,no_subtree_check)
+      /export/syncthing 192.168.0.65(rw,nohide,insecure,no_subtree_check)
+    '';
+    lockdPort = 4001;
+    mountdPort = 4002;
+    statdPort = 4000;
   };
 }

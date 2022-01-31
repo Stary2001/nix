@@ -111,9 +111,10 @@
   networking.nat.enable = true;
   networking.nat.internalInterfaces = ["ve-+"];
   networking.nat.externalInterface = "enp4s0";
-  networking.nat.forwardPorts = [
-   { sourcePort = "3000"; proto = tcp; destination = "172.30.0.2:3000"; }
-  ];
+
+  networking.nat.extraCommands = ''
+    iptables -t nat -A nixos-nat-pre -p tcp -d 172.31.1.7 --dport 3000 -j DNAT --to 172.30.0.2:3000
+  '';
 
   systemd.network.networks."40-veth" = {
     name = "ve-*";

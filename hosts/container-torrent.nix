@@ -6,7 +6,10 @@
   networking.firewall.allowedTCPPorts = [ 3000 ];
   networking.firewall.allowedUDPPorts = [];
 
-  networking.interfaces.eth0.ipv4.routes = [ { address = "185.195.232.66"; prefixLength = 32; via = "172.30.0.1"; } ];
+  networking.interfaces.eth0.ipv4.routes = [
+    { address = "185.195.232.66"; prefixLength = 32; via = "172.30.0.1"; }
+    { address = "172.31.0.0"; prefixLength = 16; via = "172.30.0.1"; }
+  ];
 
   networking.wireguard.interfaces = {
     wg0 = {

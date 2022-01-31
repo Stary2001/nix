@@ -40,7 +40,7 @@
   services.flood = {
     enable = true;
     listen = "0.0.0.0";
-    hostName = "goddard.9net.org";
+    hostName = "flood.home.9net.org";
     port = 3000;
     auth = "none";
   };

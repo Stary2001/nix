@@ -106,4 +106,42 @@
     mountdPort = 4002;
     statdPort = 4000;
   };
+
+  networking.nat.enable = true;
+  networking.nat.internalInterfaces = ["ve-+"];
+  networking.nat.externalInterface = "enp4s0";
+
+  systemd.network.networks."40-veth" = {
+    name = "ve-*";
+    # Do nothing, hopefully
+  };
+
+  containers.torrent = {
+    autoStart = true;
+
+    privateNetwork = true;
+    hostAddress = "172.30.0.1";
+    localAddress = "172.30.0.2";
+
+    bindMounts = {
+      "/var/lib/rtorrent" = {
+        hostPath = "/var/lib/rtorrent";
+        isReadOnly = false;
+      };
+
+     "/var/lib/flood" = {
+        hostPath = "/var/lib/flood";
+        isReadOnly = false;
+      };
+
+      "/etc/wireguard/mullvad.key" = {
+        hostPath = "/etc/wireguard/mullvad.key";
+        isReadOnly = true;
+      };
+    };
+
+    config = {
+      imports = [ ./container-torrent.nix ];
+    };
+  };
 }

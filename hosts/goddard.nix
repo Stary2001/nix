@@ -43,7 +43,11 @@
       "goddard.9net.org" =        { enableACME = true; forceSSL = true; };
       "flood.home.9net.org" =     { enableACME = true; forceSSL = true; locations."/".proxyPass = "http://172.31.1.7:3000"; };
       "syncthing.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "http://172.31.1.7:8384"; };
-      "smokeping.home.9net.org" = { enableACME = true; forceSSL = true; locations."/".proxyPass = "http://172.31.1.7:8081/"; };
+      "smokeping.home.9net.org" = { 
+        enableACME = true; forceSSL = true;
+        locations."= /".return = "301 /smokeping.fcgi";
+        locations."/".proxyPass = "http://172.31.1.7:8081/"; 
+      };
     };
   };
 

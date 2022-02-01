@@ -19,6 +19,13 @@
     config.boot.kernelPackages.rtl88x2bu
   ];
 
+  boot.kernel.sysctl = {
+    # https://docs.syncthing.net/users/faq.html#inotify-limits
+    # Add more inotify watches.
+
+    "fs.inotify.max_user_watches" = 204800;
+  };
+
   networking = {
     useDHCP = false;
     wireless.enable = true;

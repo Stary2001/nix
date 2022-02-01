@@ -30,7 +30,7 @@
     useDHCP = false;
     wireless.enable = true;
 
-    hostName = "nas"; # Define your hostname.
+    hostName = "karman"; # Define your hostname.
     hostId = "3302c071";
   
     useNetworkd = true;

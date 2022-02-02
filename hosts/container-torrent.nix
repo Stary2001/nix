@@ -1,6 +1,7 @@
 {config, pkgs, lib, ...}:
 {
-  imports = [ ../modules/rtorrent.nix../modules/flood.nix ];
+  disabledModules = [ "services/torrent/rtorrent.nix" ];
+  imports = [ ../modules/rtorrent.nix ../modules/flood.nix ];
 
   environment.systemPackages = [ pkgs.rxvt_unicode.terminfo ];
 

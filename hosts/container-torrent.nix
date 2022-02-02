@@ -1,6 +1,6 @@
 {config, pkgs, lib, ...}:
 {
-  imports = [ ../rutorrent-overlay.nix ../flood-overlay.nix ../modules/flood.nix ];
+  imports = [ ../modules/rtorrent.nix../modules/flood.nix ];
 
   environment.systemPackages = [ pkgs.rxvt_unicode.terminfo ];
 

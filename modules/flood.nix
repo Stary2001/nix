@@ -29,7 +29,7 @@ in {
       package = mkOption {
         type = types.package;
         default = pkgs.flood;
-        defaultText = literalExpression "pkgs.flood";
+        defaultText = literalExpression "pkgs.nodePackages.flood";
         description = ''
           The Flood package to use.
         '';

@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../secrets/wifi.nix ../9net.nix ];
+  imports = [ ../secrets/wifi.nix ../9net.nix ../avahi.nix ];
 
   fileSystems."/".options = [ "defaults" "size=2G" "mode=755" ];
 

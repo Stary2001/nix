@@ -13,8 +13,6 @@ let unstable = import <nixos-unstable> {
     libvirt = unstable.libvirt;
     virt-manager = unstable.virt-manager;
     qemu = unstable.qemu;
-    sublime4 = unstable.sublime4;
-    kicad = unstable.kicad;
   })
 
   (self: super: {

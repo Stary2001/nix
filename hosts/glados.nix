@@ -1,7 +1,7 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../unstable-overlays.nix ../9net.nix ../netns.nix ../netns-wg.nix ../qemu-hook.nix ../desktop-ish.nix ../netns-wrapper.nix ../secrets/wifi.nix ];
-
+  imports = [ ../unstable-overlays.nix ../9net.nix ../netns.nix ../netns-wg.nix ../qemu-hook.nix ../desktop-ish.nix ../netns-wrapper.nix ../secrets/wifi.nix ../avahi.nix ];
+  
   nine_net = {
     enable = true;
     node_name = "stary_glados";
@@ -119,11 +119,6 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
 
-  services.avahi = {
-    enable = true;
-    nssmdns = true;
-  };
-
   virtualisation.libvirtd = {
     enable = true;
     onBoot = "ignore";
@@ -194,14 +189,6 @@ pxe-service=0,"Raspberry Pi Boot"
   }) ];
 
   services.vnstat.enable = true;
-
-  #users.users.ash = {
-  #  isNormalUser = true;
-  #};
-  #users.users.ash.openssh.authorizedKeys.keys = [
-  #  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTAWuxMynX4it9pzoX6GrBcyy2fj04EfO5lD88JCK05 ash@the"
-  #];
-
 
   fileSystems."/data/syncthing" = {
     device = "192.168.0.70:/syncthing";

@@ -1,6 +1,6 @@
 {config, pkgs, ...}:
 {
-  imports = [ ../unstable-overlays.nix ../9net.nix ../netns.nix ../netns-wg.nix ../qemu-hook.nix ../desktop-ish.nix ../netns-wrapper.nix ../secrets/wifi.nix ../avahi.nix ];
+  imports = [ ../unstable-overlays.nix ../my-packages.nix ../config-tweaks.nix ../9net.nix ../netns.nix ../netns-wg.nix ../qemu-hook.nix ../desktop-ish.nix ../netns-wrapper.nix ../secrets/wifi.nix ../avahi.nix ];
   
   nine_net = {
     enable = true;
@@ -194,5 +194,14 @@ pxe-service=0,"Raspberry Pi Boot"
     device = "192.168.0.70:/syncthing";
     fsType = "nfs";
     options = [ "x-systemd.automount" "x-systemd.idle-timeout=3600" "noauto" ];
+  };
+
+  systemd.services.light_to_influx = {
+    wantedBy = [ "multi-user.target" ];
+    description = "why not";
+    serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.light_to_influx}/bin/light_to_influx.py";
+      };
   };
 }

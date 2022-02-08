@@ -46,5 +46,11 @@
      cron
      direnv
      vlc
+
+     unzip
+     unrar
+     p7zip
+
+     rink
   ];
 }

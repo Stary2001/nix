@@ -196,6 +196,12 @@ pxe-service=0,"Raspberry Pi Boot"
     options = [ "x-systemd.automount" "x-systemd.idle-timeout=3600" "noauto" ];
   };
 
+  fileSystems."/data/media" = {
+    device = "192.168.0.70:/media";
+    fsType = "nfs";
+    options = [ "x-systemd.automount" "x-systemd.idle-timeout=3600" "noauto" ];
+  };
+
   systemd.services.light_to_influx = {
     wantedBy = [ "multi-user.target" ];
     description = "why not";
@@ -204,4 +210,7 @@ pxe-service=0,"Raspberry Pi Boot"
         ExecStart = "${pkgs.light_to_influx}/bin/light_to_influx.py";
       };
   };
+
+  services.zfs.autoScrub.enable = true;
+  services.zfs.autoSnapshot.enable = true;
 }

@@ -52,5 +52,6 @@
      p7zip
 
      rink
+     hushboard
   ];
 }

@@ -57,10 +57,6 @@
     443 # https
     5355 # llmnr
 
-    3000 # flood
-    8384 # syncthing
-    8081 # smokeping
-
     111 2049 4000 4001 4002 20048 # nfsv3
   ];
 
@@ -98,7 +94,6 @@
     overrideDevices = false;
     overrideFolders = false;
 
-    guiAddress = "0.0.0.0:8384";
     dataDir = "/data/syncthing";
 
     openDefaultPorts = true;
@@ -109,6 +104,7 @@
     exports = ''
       /export 192.168.0.65(rw,fsid=0,no_subtree_check)
       /export/syncthing 192.168.0.65(rw,nohide,insecure,no_subtree_check)
+      /export/media 192.168.0.65(rw,nohide,insecure,no_subtree_check)
     '';
     lockdPort = 4001;
     mountdPort = 4002;
@@ -163,4 +159,38 @@
   };
 
   services.vnstat.enable = true;
+
+  services.zfs.autoSnapshot.enable = true;
+  services.zfs.autoScrub.enable = true;
+
+  users.users.stary.extraGroups = [ "libvirtd" ];
+   virtualisation.libvirtd = {
+    enable = true;
+    onBoot = "ignore";
+    onShutdown = "shutdown";
+
+    #qemu.ovmf.package = pkgs.OVMF.override { secureBoot = true; tpmSupport = true; };
+    #qemu.swtpm.enable = true;
+  };
+
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    virtualHosts = {
+      "karman.9net.org" = { default = true; };
+      "flood.home.9net.org" = { locations."/".proxyPass = "http://172.30.0.2:3000"; };
+
+      # security: "dude trust me"
+      "syncthing.home.9net.org" = {
+        locations."/" = {
+          extraConfig = ''
+            proxy_set_header Host localhost;
+            proxy_pass http://localhost:8384;
+          '';
+        };
+      };
+
+      "smokeping.home.9net.org" = { locations."/".proxyPass = "http://localhost:8081/"; };
+    };
+  };
 }

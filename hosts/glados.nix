@@ -7,6 +7,10 @@
     ipv4_address = "172.31.1.5";
   };
 
+  nixpkgs.overlays = [
+    (import ../overlays/unstable-overlays.nix)
+  ];
+
   boot.kernelParams = [ "vfio-pci.ids=10de:0fc1,10de:0e1b" "acpi_enforce_resources=lax"];
   boot.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
   boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];

@@ -178,7 +178,7 @@
     recommendedProxySettings = true;
     virtualHosts = {
       "karman.9net.org" = { default = true; };
-      "flood.home.9net.org" = { locations."/".proxyPass = "http://172.30.0.2:3000"; };
+      "flood.home.9net.org" = { locations."/" = { proxyPass = "http://172.30.0.2:3000"; extraConfig = "allow 172.31.0.3; deny all;"; }; };
 
       # security: "dude trust me"
       "syncthing.home.9net.org" = {
@@ -186,11 +186,13 @@
           extraConfig = ''
             proxy_set_header Host localhost;
             proxy_pass http://localhost:8384;
+            allow 172.31.0.3;
+            deny all;
           '';
         };
       };
 
-      "smokeping.home.9net.org" = { locations."/".proxyPass = "http://localhost:8081/"; };
+      "smokeping.home.9net.org" = { locations."/" = { proxyPass = "http://localhost:8081"; extraConfig = "allow 172.31.0.3; deny all;"; }; };
     };
   };
 }

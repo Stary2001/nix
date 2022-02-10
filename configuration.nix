@@ -2,11 +2,20 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }: {
+{ config, pkgs, options, ... }: {
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-         "electron-11.5.0"
+  # nixos machine broke
+  # https://discourse.nixos.org/t/nixos-overlay-confusion/1778/4
+  nix.nixPath =
+    options.nix.nixPath.default ++
+    [ "nixpkgs-overlays=/home/stary/nix/overlays" ];
+
+  nixpkgs.overlays = [
+    (import overlays/my-packages.nix)
+    (import overlays/pin-geant-root.nix)
+    (import overlays/polybar-i3.nix)
+    (import overlays/todoist-electron-15.nix)
   ];
 
   # Select internationalisation properties.

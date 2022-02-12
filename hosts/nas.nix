@@ -56,6 +56,7 @@
     80 # http
     443 # https
     5355 # llmnr
+    32400 # plex
 
     111 2049 4000 4001 4002 20048 # nfsv3
   ];
@@ -194,5 +195,9 @@
 
       "smokeping.home.9net.org" = { locations."/" = { proxyPass = "http://localhost:8081"; extraConfig = "allow 172.31.0.3; deny all;"; }; };
     };
+  };
+
+  services.plex = {
+    enable = true;
   };
 }
